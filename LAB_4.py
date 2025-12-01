@@ -1,4 +1,4 @@
-# Importing modules
+
 import matplotlib.pyplot as plt
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
@@ -7,31 +7,30 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.optimizers import SGD
 
-# Loading data
+
 iris = load_iris()
 data = iris.data
 labels = iris.target
 dataset = data
 
-# Creating features and labels
+
 X = data
 y = labels
 
-# One-hot encoding labels
 encoder = OneHotEncoder(sparse_output=False)
 y_onehot = encoder.fit_transform(y.reshape(-1, 1))
 
-# Splitting into train/test
+
 x_train, x_test, y_train, y_test = train_test_split(
     X, y_onehot, test_size=0.2, random_state=42
 )
 
-# Scaling / preprocessing data
+
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 
-# Building a helper to create the model
+
 def build_model():
     model = Sequential([
         Dense(64, activation="relu", input_shape=(x_train.shape[1],)),
@@ -40,7 +39,7 @@ def build_model():
     ])
     return model
 
-# Building the neural network: GD model (batch_size=32)
+
 model_gd = build_model()
 model_gd.compile(
     optimizer=SGD(learning_rate=0.01),
@@ -48,7 +47,7 @@ model_gd.compile(
     metrics=["accuracy"]
 )
 
-# Building the neural network: SGD model (batch_size=1)
+
 model_sgd = build_model()
 model_sgd.compile(
     optimizer=SGD(learning_rate=0.01),
@@ -56,7 +55,7 @@ model_sgd.compile(
     metrics=["accuracy"]
 )
 
-# Training the models
+
 history_gd = model_gd.fit(
     x_train, y_train,
     epochs=50,
@@ -73,7 +72,7 @@ history_sgd = model_sgd.fit(
     verbose=0
 )
 
-# Plotting results – Loss
+
 plt.figure()
 plt.plot(history_gd.history["loss"], label="GD Train Loss")
 plt.plot(history_gd.history["val_loss"], label="GD Val Loss")
