@@ -1,4 +1,4 @@
-# Importing modules
+
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.datasets import make_classification
@@ -7,7 +7,6 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 from tensorflow.keras.optimizers import Adam
 
-# Loading data (synthetic classification)
 data, labels = make_classification(
     n_samples=1000,
     n_features=20,
@@ -16,14 +15,11 @@ data, labels = make_classification(
 )
 dataset = data
 
-# Splitting into train/test
 x_train, x_test, y_train, y_test = train_test_split(
     dataset, labels, test_size=0.2, random_state=42
 )
 
-# Scaling / preprocessing data (skipped as in original)
 
-# Building the neural network – Dropout model
 def create_dropout_model(dropout_rate=0.2):
     model = Sequential([
         Dense(64, activation="relu", input_shape=(x_train.shape[1],)),
@@ -48,7 +44,6 @@ def create_clipped_model(clip_norm=1.0):
     )
     return model
 
-# Training the Dropout model
 dropout_model = create_dropout_model()
 dropout_model.compile(
     optimizer="adam",
@@ -63,7 +58,7 @@ history_dropout = dropout_model.fit(
     verbose=0
 )
 
-# Training the Gradient Clipping model
+
 clipped_model = create_clipped_model()
 history_clipped = clipped_model.fit(
     x_train, y_train,
@@ -73,7 +68,7 @@ history_clipped = clipped_model.fit(
     verbose=0
 )
 
-# Plotting results – Accuracy
+
 plt.plot(history_dropout.history["accuracy"], "--", label="Dropout Train Acc")
 plt.plot(history_dropout.history["val_accuracy"], "--", label="Dropout Val Acc")
 plt.plot(history_clipped.history["accuracy"], label="Clipped Train Acc")
