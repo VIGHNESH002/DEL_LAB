@@ -30,13 +30,13 @@ class Perceptron:
         z = np.dot(x, self.w) + self.b
         return int(z >= 0)
 
-# Training the model
+
 model = Perceptron(learning_rate=0.01, epochs=100)
 model.fit(x_train, y_train)
 
-# Making predictions
+
 x_test = np.array([2, 4])
 pred = model.predict(x_test)
 
-# Printing output
+
 print("Prediction:", pred)
