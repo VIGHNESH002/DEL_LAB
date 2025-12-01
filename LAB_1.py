@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-# Loading data (random inputs)
+
 input_size = 5
 num_samples = 100
 data = np.random.rand(num_samples, input_size)
