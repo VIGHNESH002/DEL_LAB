@@ -1,4 +1,4 @@
-# Importing modules
+
 import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
@@ -7,18 +7,18 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Embedding, LSTM, Dense
 
-# Loading data
+
 max_words = 10000
 maxlen = 200
 (x_train, y_train), (x_test, y_test) = imdb.load_data(num_words=max_words)
 data = x_train
 dataset = x_train
 
-# Scaling / preprocessing data – padding sequences
+
 x_train = pad_sequences(x_train, maxlen=maxlen)
 x_test = pad_sequences(x_test, maxlen=maxlen)
 
-# Building the neural network (LSTM)
+
 model = Sequential([
     Embedding(max_words, 50, input_length=maxlen),
     LSTM(64, dropout=0.2, recurrent_dropout=0.2),
@@ -31,7 +31,7 @@ model.compile(
     metrics=["accuracy"]
 )
 
-# Training the model
+
 history = model.fit(
     x_train, y_train,
     epochs=5,
@@ -40,11 +40,11 @@ history = model.fit(
     verbose=2
 )
 
-# Calculating metrics
+
 test_loss, test_acc = model.evaluate(x_test, y_test, verbose=0)
 print("Test Accuracy:", test_acc)
 
-# Simple sentiment prediction helper
+
 word_index = imdb.get_word_index()
 
 def predict_sentiment(text):
@@ -57,7 +57,7 @@ def predict_sentiment(text):
 print("Positive:", predict_sentiment("This movie was fantastic and beautifully made"))
 print("Negative:", predict_sentiment("This movie was boring, slow and a waste of time"))
 
-# Plotting results – Accuracy and Loss
+
 plt.plot(history.history["accuracy"], label="Train Acc")
 plt.plot(history.history["val_accuracy"], label="Val Acc")
 plt.xlabel("Epoch")
